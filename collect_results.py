@@ -74,7 +74,7 @@ class RaceResultsCapture:
     def find_runner(self, input_id):
         """Find runner by registration number or staff_student_number"""
         # Check if it's a registration number (integer + optional letters)
-        match = re.match(r'^(\d{1,3})\s*[a-zA-Z]*$', input_id.strip())
+        match = re.match(r'^(\d{1,3})\s*[-a-zA-Z]*$', input_id.strip())
         if match:
             reg_num = match.group(1)
             # Try exact match first, then partial match
