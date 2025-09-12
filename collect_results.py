@@ -311,10 +311,10 @@ class RaceResultsCapture:
         <div class="timestamp">Results generated on """ + datetime.now().strftime("%B %d, %Y at %H:%M:%S") + """</div>
 """
         
-        # Top 6 Men
+        # Top 10 Men
         html += '''
         <div class="section">
-            <h2>🥇 Top 6 Men</h2>
+            <h2>🥇 Top 10 Men</h2>
             <table>
                 <tr>
                     <th>Position</th>
@@ -327,7 +327,7 @@ class RaceResultsCapture:
             SELECT first_name, last_name, organisational_unit, elapsed, list_results, gender_pos
             FROM registrations 
             WHERE gender = 'male' AND gender_pos IS NOT NULL
-            ORDER BY gender_pos LIMIT 6
+            ORDER BY gender_pos LIMIT 10
         """)
         
         for i, row in enumerate(self.cursor.fetchall(), 1):
@@ -352,7 +352,7 @@ class RaceResultsCapture:
         # Top 6 Women
         html += '''
         <div class="section">
-            <h2>🥇 Top 6 Women</h2>
+            <h2>🥇 Top 10 Women</h2>
             <table>
                 <tr>
                     <th>Position</th>
@@ -365,7 +365,7 @@ class RaceResultsCapture:
             SELECT first_name, last_name, organisational_unit, elapsed, list_results, gender_pos
             FROM registrations 
             WHERE gender = 'female' AND gender_pos IS NOT NULL
-            ORDER BY gender_pos LIMIT 6
+            ORDER BY gender_pos LIMIT 10
         """)
         
         for i, row in enumerate(self.cursor.fetchall(), 1):
@@ -390,7 +390,7 @@ class RaceResultsCapture:
         # Top 2 Men's Teams
         html += '''
         <div class="section">
-            <h2>🏆 Top 2 Men's Teams</h2>'''
+            <h2>🏆 Top 3 Men's Teams</h2>'''
         
         # Get men's teams
         self.cursor.execute("""
@@ -404,7 +404,7 @@ class RaceResultsCapture:
             WHERE rn <= 4
             GROUP BY organisational_unit
             HAVING COUNT(*) = 4
-            ORDER BY total_time LIMIT 2
+            ORDER BY total_time LIMIT 3
         """)
         
         men_teams = self.cursor.fetchall()
@@ -444,7 +444,7 @@ class RaceResultsCapture:
         # Top 2 Women's Teams
         html += '''
         <div class="section">
-            <h2>🏆 Top 2 Women's Teams</h2>'''
+            <h2>🏆 Top 3 Women's Teams</h2>'''
         
         # Get women's teams
         self.cursor.execute("""
@@ -458,7 +458,7 @@ class RaceResultsCapture:
             WHERE rn <= 4
             GROUP BY organisational_unit
             HAVING COUNT(*) = 4
-            ORDER BY total_time LIMIT 2
+            ORDER BY total_time LIMIT 3
         """)
         
         women_teams = self.cursor.fetchall()
